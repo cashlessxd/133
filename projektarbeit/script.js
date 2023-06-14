@@ -44,6 +44,7 @@ function getTafel(selectedKlasseId, date) {
                 $.each(data, function (key, tafel) {
                     $("#" + tafel.tafel_wochentag).append(getLektion(tafel.tafel_von, tafel.tafel_bis, tafel.tafel_longfach, tafel.tafel_lehrer, tafel.tafel_raum));
                 })
+                setSmallScreenTafelTage();
             }).fail(function () {
                 console.log("Request Failed");
             });
@@ -88,6 +89,15 @@ function manipulateDate(manipulator) {
     setDate();
     resetTafel();
     getTafel(localStorage.getItem("selectedKlasseId"), getDate());
+}
+
+function setSmallScreenTafelTage() {
+    days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
+    for (let i = 0; i < days.length; i++) {
+        if ($("#" + (i + 1)).children().length) {
+            $("#" + (i + 1)).prepend('<h4 class="small-screen text-center p-4">' + days[i] + '</h4>');
+        }        
+    }
 }
 
 $("#beruf").on("change", function(){

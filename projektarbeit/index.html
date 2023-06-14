@@ -7,6 +7,7 @@
     <title>Stundenplan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"
         defer></script>
@@ -18,7 +19,7 @@
 <body>
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">(Besser als) BBZBL</a>
+            <a class="navbar-brand" href="#"><small>(Besser als)</small> BBZBL</a>
             <button type="button" class="btn btn-outline-danger" id="reset-webstorage">Reset Webstorage</button>
         </div>
     </nav>
@@ -37,10 +38,10 @@
     </div>
     <div class="container-fluid text-center pt-5">
         <div class="btn-group" id="manipulate-date">
-            <button class="btn btn-outline-dark" id="subtr-week-five">-5</button>
-            <button class="btn btn-outline-dark" id="subtr-week-one"><img src="icons/arrow-left.svg" alt="arrow-left"></button>
-            <button class="btn btn-outline-dark" id="add-week-one"><img src="icons/arrow-right.svg" alt="arrow-right"></button>
-            <button class="btn btn-outline-dark" id="add-week-five">+5</button>
+            <button class="btn btn-outline-dark" id="subtr-week-five"><img src="icons/arrow-left.svg" alt="arrow-left"> 5</button>
+            <button class="btn btn-outline-dark" id="subtr-week-one"><img src="icons/arrow-left.svg" alt="arrow-left"> Vorherige</button>
+            <button class="btn btn-outline-dark" id="add-week-one">Nächste <img src="icons/arrow-right.svg" alt="arrow-right"></button>
+            <button class="btn btn-outline-dark" id="add-week-five">5 <img src="icons/arrow-right.svg" alt="arrow-right"></button>
         </div>
     </div>
     <div class="text-center pt-2">
@@ -48,7 +49,7 @@
     </div>
     <div class="pt-5">
         <div class="container text-center">
-            <div class="row" id="tafel-tage">
+            <div class="row big-screen" id="tafel-tage">
                 <div class="col">
                     <h4>Montag</h4>
                 </div>
@@ -69,19 +70,21 @@
         </div>
         <div class="container">
             <div class="row pt-4" id="tafel">
-                <div class="col" id="1">
+                <!--Replace h4 tag with generated h4 tag-->
+                <!--Validate HTML-->
+                <div class="col-lg col-12" id="1">
+                    
+                </div>
+                <div class="col-lg col-12" id="2">
 
                 </div>
-                <div class="col" id="2">
+                <div class="col-lg col-12" id="3">
 
                 </div>
-                <div class="col" id="3">
+                <div class="col-lg col-12" id="4">
 
                 </div>
-                <div class="col" id="4">
-
-                </div>
-                <div class="col" id="5">
+                <div class="col-lg col-12" id="5">
 
                 </div>
             </div>

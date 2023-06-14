@@ -1,0 +1,17 @@
+small {
+    font-size: 8pt;
+}
+
+.small-screen {
+    display: none;
+}
+
+@media screen and (max-width: 991px) {
+    .big-screen {
+		display: none;
+	}
+
+    .small-screen {
+        display: block;
+    }
+}
