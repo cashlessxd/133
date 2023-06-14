@@ -1,4 +1,7 @@
+let dateManipulator = 0;
+
 $(document).ready(function() {
+    setDate(dateManipulator);
     $("#beruf").append("<option selected disabled>Beruf auswählen</option>");
     $.getJSON("http://sandbox.gibm.ch/berufe.php")
         .done(function (data) {
@@ -24,7 +27,7 @@ function getKlassen(selectedBerufId) {
             $.each(data, function (key, klasse) {
                 if (klasse.klasse_id == localStorage.getItem("selectedKlasseId")) {
                     $("#klasse").append("<option value='" + klasse.klasse_id + "' selected>" + klasse.klasse_name + "</option>");
-                    getTafel(klasse.klasse_id);
+                    getTafel(klasse.klasse_id, getDate());
                 } else {
                     $("#klasse").append("<option value='" + klasse.klasse_id + "'>" + klasse.klasse_name + "</option>");
                 }
@@ -34,15 +37,18 @@ function getKlassen(selectedBerufId) {
         });
 }
 
-function getTafel(selectedKlasseId) {
-    $.getJSON("https://sandbox.gibm.ch/tafel.php?klasse_id=" + selectedKlasseId)
-        .done(function (data) {
-            $.each(data, function (key, tafel) {
-                $("#" + tafel.tafel_wochentag).append(getLektion(tafel.tafel_von, tafel.tafel_bis, tafel.tafel_longfach, tafel.tafel_lehrer, tafel.tafel_raum));
-            })
-        }).fail(function () {
-            console.log("Request Failed");
-        });
+function getTafel(selectedKlasseId, date) {
+    $("#tafel").fadeOut(function() {
+        $.getJSON("https://sandbox.gibm.ch/tafel.php?klasse_id=" + selectedKlasseId + "&woche=" + date)
+            .done(function (data) {
+                $.each(data, function (key, tafel) {
+                    $("#" + tafel.tafel_wochentag).append(getLektion(tafel.tafel_von, tafel.tafel_bis, tafel.tafel_longfach, tafel.tafel_lehrer, tafel.tafel_raum));
+                })
+            }).fail(function () {
+                console.log("Request Failed");
+            });
+    });
+    $("#tafel").fadeIn(200);
 }
 
 function resetTafel() {
@@ -66,6 +72,24 @@ function getLektion(beginTime, endTime, name, lehrer, zimmer) {
     return lektion;
 }
 
+function getDate() {
+    const week = moment().add(dateManipulator, "w").week();
+    const year = moment().add(dateManipulator, "w").year();
+    return week + "-" + year; 
+}
+
+function setDate() {
+    $("#week").empty();
+    $("#week").append("KW " + getDate() + (dateManipulator == 0 ? " (diese Woche)" : ""));
+}
+
+function manipulateDate(manipulator) {
+    dateManipulator += manipulator;
+    setDate();
+    resetTafel();
+    getTafel(localStorage.getItem("selectedKlasseId"), getDate());
+}
+
 $("#beruf").on("change", function(){
     localStorage.setItem("selectedBerufId", this.value);
     localStorage.removeItem("selectedKlasseId");
@@ -76,5 +100,25 @@ $("#beruf").on("change", function(){
 $("#klasse").on("change", function(){
     localStorage.setItem("selectedKlasseId", this.value);
     resetTafel();
-    getTafel(this.value);
+    getTafel(this.value, getDate());
+});
+
+$("#reset-webstorage").on("click", function() {
+    localStorage.clear();
+});
+
+$("#add-week-one").on("click", function() {
+    manipulateDate(1); 
+});
+
+$("#add-week-five").on("click", function() {
+    manipulateDate(5);
+});
+
+$("#subtr-week-one").on("click", function() {
+    manipulateDate(-1);
+});
+
+$("#subtr-week-five").on("click", function() {
+    manipulateDate(-5);
 });
