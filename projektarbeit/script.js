@@ -1,5 +1,7 @@
+// Um wie viel die aktuelle Kalenderwoche verschoben wird vom Benutzer (Kalenderwochen wechseln)
 let dateManipulator = 0;
 
+// OnInit => Initialdaten werden geladen, Dropdown wird befüllt, Datum wird gesetzt
 $(document).ready(function() {
     setDate(dateManipulator);
     $("#beruf").append("<option selected disabled>Beruf auswählen</option>");
@@ -18,6 +20,7 @@ $(document).ready(function() {
         });
 })
 
+// Holt Klassen und Befüllt entsprechendes Dropdown
 function getKlassen(selectedBerufId) {
     $("#klasse-container").removeAttr("hidden");
     $("#klasse").empty();
@@ -37,6 +40,7 @@ function getKlassen(selectedBerufId) {
         });
 }
 
+// Holt den Stundenplan und gibt befüllt diesen in die DOM
 function getTafel(selectedKlasseId, date) {
     $("#tafel").fadeOut(function() {
         $.getJSON("https://sandbox.gibm.ch/tafel.php?klasse_id=" + selectedKlasseId + "&woche=" + date)
@@ -52,10 +56,12 @@ function getTafel(selectedKlasseId, date) {
     $("#tafel").fadeIn(200);
 }
 
+// Leert den Stundenplan
 function resetTafel() {
     $("#tafel").children().empty();
 }
 
+// Erstellt den HTML-Teil für eine Lektion im Stundenplan
 function getLektion(beginTime, endTime, name, lehrer, zimmer) {
     const lektion = "<div class='card'>" +
                         "<div class='card-header text-center'>" +
@@ -73,17 +79,20 @@ function getLektion(beginTime, endTime, name, lehrer, zimmer) {
     return lektion;
 }
 
+// Holt momentane Kalenderwoche
 function getDate() {
     const week = moment().add(dateManipulator, "w").week();
     const year = moment().add(dateManipulator, "w").year();
     return week + "-" + year; 
 }
 
+// Setzt Kalenderwoche in die DOM ein
 function setDate() {
     $("#week").empty();
     $("#week").append("KW " + getDate() + (dateManipulator == 0 ? " (diese Woche)" : ""));
 }
 
+// Holt Stundenplan neu und aktualisiert die Kalenderwoche nachdem sie gewechselt wurde
 function manipulateDate(manipulator) {
     dateManipulator += manipulator;
     setDate();
@@ -91,6 +100,7 @@ function manipulateDate(manipulator) {
     getTafel(localStorage.getItem("selectedKlasseId"), getDate());
 }
 
+// Zuständig für Titel (Wochentag) im Handyformat
 function setSmallScreenTafelTage() {
     days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
     for (let i = 0; i < days.length; i++) {
@@ -100,6 +110,7 @@ function setSmallScreenTafelTage() {
     }
 }
 
+// Wechsel Beruf => Localstorage management und holt aktualisierte Daten
 $("#beruf").on("change", function(){
     localStorage.setItem("selectedBerufId", this.value);
     localStorage.removeItem("selectedKlasseId");
@@ -107,28 +118,34 @@ $("#beruf").on("change", function(){
     getKlassen(this.value);
 });
 
+// Wechsel Klasse => Localstorage management und holt aktualisierte Daten
 $("#klasse").on("change", function(){
     localStorage.setItem("selectedKlasseId", this.value);
     resetTafel();
     getTafel(this.value, getDate());
 });
 
+// Leert Localstorage auf Anfrage vom Benutzer
 $("#reset-webstorage").on("click", function() {
     localStorage.clear();
 });
 
+// 1 Kalenderwoche addieren
 $("#add-week-one").on("click", function() {
     manipulateDate(1); 
 });
 
+// 5 Kalenderwochen addieren
 $("#add-week-five").on("click", function() {
     manipulateDate(5);
 });
 
+// 1 Kalenderwoche subtrahieren
 $("#subtr-week-one").on("click", function() {
     manipulateDate(-1);
 });
 
+// 5 Kalenderwochen subtrahieren
 $("#subtr-week-five").on("click", function() {
     manipulateDate(-5);
 });
