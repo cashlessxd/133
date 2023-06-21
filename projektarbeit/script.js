@@ -46,6 +46,13 @@ function getTafel(selectedKlasseId, date) {
     $("#tafel").fadeOut(function() {
         $.getJSON("https://sandbox.gibm.ch/tafel.php?klasse_id=" + selectedKlasseId + "&woche=" + date)
             .done(function (data) {
+                if (data[0]) {
+                    $("#daten-voll").attr("hidden", false);
+                    $("#daten-leer").attr("hidden", true);
+                } else {
+                    $("#daten-voll").attr("hidden", true);
+                    $("#daten-leer").attr("hidden", false);
+                }
                 $.each(data, function (key, tafel) {
                     $("#" + tafel.tafel_wochentag).append(getLektion(tafel.tafel_von, tafel.tafel_bis, tafel.tafel_longfach, tafel.tafel_lehrer, tafel.tafel_raum));
                 })
@@ -118,7 +125,7 @@ function setDarkmode() {
         });
     } else {
         $("html").attr("data-bs-theme", "light");
-        localStorage.setItem("displayMode", "0");
+        localStorage.setItem("displayMode", "light");
     }
 }
 
@@ -128,6 +135,8 @@ $("#beruf").on("change", function(){
     localStorage.removeItem("selectedKlasseId");
     resetTafel();
     getKlassen(this.value);
+    $("#daten-voll").attr("hidden", true);
+    $("#daten-leer").attr("hidden", true);
 });
 
 // Wechsel Klasse => Localstorage management und holt aktualisierte Daten
