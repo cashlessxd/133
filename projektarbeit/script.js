@@ -140,6 +140,7 @@ $("#klasse").on("change", function(){
 // Leert Localstorage auf Anfrage vom Benutzer
 $("#reset-webstorage").on("click", function() {
     localStorage.clear();
+    location.reload();
 });
 
 // Darkmode aktivieren / deaktivieren
