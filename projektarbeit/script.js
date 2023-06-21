@@ -118,6 +118,7 @@ function setSmallScreenTafelTage() {
     }
 }
 
+// Setze Darkmode
 function setDarkmode() {
     if (localStorage.getItem("displayMode")) {
         $("html").attr("data-bs-theme", function(){
