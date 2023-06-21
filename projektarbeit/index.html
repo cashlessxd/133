@@ -20,7 +20,10 @@
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><small>(Besser als)</small> BBZBL</a>
-            <button type="button" class="btn btn-outline-danger" id="reset-webstorage">Reset Webstorage</button>
+            <div>
+                <button type="button" class="btn btn-outline-secondary" id="darkmode">Toggle Darkmode</button>
+                <button type="button" class="btn btn-outline-danger" id="reset-webstorage">Reset Webstorage</button>
+            </div>
         </div>
     </nav>
     <div class="container pt-5">
@@ -38,10 +41,10 @@
     </div>
     <div class="container-fluid text-center pt-5">
         <div class="btn-group" id="manipulate-date">
-            <button class="btn btn-outline-dark" id="subtr-week-five"><img src="icons/arrow-left.svg" alt="arrow-left"> 5</button>
-            <button class="btn btn-outline-dark" id="subtr-week-one"><img src="icons/arrow-left.svg" alt="arrow-left"> Vorherige</button>
-            <button class="btn btn-outline-dark" id="add-week-one">Nächste <img src="icons/arrow-right.svg" alt="arrow-right"></button>
-            <button class="btn btn-outline-dark" id="add-week-five">5 <img src="icons/arrow-right.svg" alt="arrow-right"></button>
+            <button class="btn btn-outline-secondary" id="subtr-week-five"><img src="icons/arrow-left.svg" alt="arrow-left"> 5</button>
+            <button class="btn btn-outline-secondary" id="subtr-week-one"><img src="icons/arrow-left.svg" alt="arrow-left"> Vorherige</button>
+            <button class="btn btn-outline-secondary" id="add-week-one">Nächste <img src="icons/arrow-right.svg" alt="arrow-right"></button>
+            <button class="btn btn-outline-secondary" id="add-week-five">5 <img src="icons/arrow-right.svg" alt="arrow-right"></button>
         </div>
     </div>
     <div class="text-center pt-2">
@@ -70,8 +73,6 @@
         </div>
         <div class="container">
             <div class="row pt-4" id="tafel">
-                <!--Replace h4 tag with generated h4 tag-->
-                <!--Validate HTML-->
                 <div class="col-lg col-12" id="1">
                     
                 </div>

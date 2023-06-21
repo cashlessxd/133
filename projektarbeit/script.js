@@ -3,6 +3,7 @@ let dateManipulator = 0;
 
 // OnInit => Initialdaten werden geladen, Dropdown wird befüllt, Datum wird gesetzt
 $(document).ready(function() {
+    setDarkmode();
     setDate(dateManipulator);
     $("#beruf").append("<option selected disabled>Beruf auswählen</option>");
     $.getJSON("http://sandbox.gibm.ch/berufe.php")
@@ -110,6 +111,17 @@ function setSmallScreenTafelTage() {
     }
 }
 
+function setDarkmode() {
+    if (localStorage.getItem("displayMode")) {
+        $("html").attr("data-bs-theme", function(){
+            return localStorage.getItem("displayMode") == "light" ? "light" : "dark";
+        });
+    } else {
+        $("html").attr("data-bs-theme", "light");
+        localStorage.setItem("displayMode", "0");
+    }
+}
+
 // Wechsel Beruf => Localstorage management und holt aktualisierte Daten
 $("#beruf").on("change", function(){
     localStorage.setItem("selectedBerufId", this.value);
@@ -128,6 +140,15 @@ $("#klasse").on("change", function(){
 // Leert Localstorage auf Anfrage vom Benutzer
 $("#reset-webstorage").on("click", function() {
     localStorage.clear();
+});
+
+// Darkmode aktivieren / deaktivieren
+$("#darkmode").on("click", function() {
+    $("html").attr("data-bs-theme", function(_, attr){
+        displayMode = attr == "dark" ? "light" : "dark";
+        localStorage.setItem("displayMode", displayMode);
+        return displayMode;
+    });
 });
 
 // 1 Kalenderwoche addieren
